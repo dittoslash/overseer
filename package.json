@@ -1,0 +1,19 @@
+{
+  "name": "overseer",
+  "version": "1.0.0",
+  "description": "Some game thing",
+  "main": "dist/bundle.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dittoslash/overseer.git"
+  },
+  "author": "Dittoslash",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dittoslash/overseer/issues"
+  },
+  "homepage": "https://github.com/dittoslash/overseer#readme"
+}
