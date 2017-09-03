@@ -8,13 +8,13 @@ module.exports =
       Stat N will be set to itself X (Y * trait level).
       For example: modStr: ["*", 2] with str 1 and level 3
       2 * 3 = 6, 6 * 1 = 6, new str = 6
+      func is a function that takes the minion and returns the changed version.
       ###
       HardWorker:
+         modBaseLrn: ["/", 2]
          modStr: ["*", 2]
-         modStrLrn: ["/", 2]
          modCon: ["*", 2]
-         modConLrn: ["/", 2]
-         modIntLrn:
+         modInt: ["/", 4]
       human:
 
 

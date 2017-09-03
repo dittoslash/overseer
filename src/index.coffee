@@ -21,7 +21,7 @@ draw = ->
 
    u("#minions").html str
 
-addNewMini = ->
+addNewMinion = ->
 
 
 draw()
