@@ -4,7 +4,8 @@
   "description": "Some game thing",
   "main": "dist/bundle.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "browserify -t coffeeify src/index.coffee > dist/bundle.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/dittoslash/overseer/issues"
   },
-  "homepage": "https://github.com/dittoslash/overseer#readme"
+  "homepage": "https://github.com/dittoslash/overseer#readme",
+  "devDependencies": {
+    "browserify": "^14.4.0",
+    "coffeeify": "^2.1.0"
+  }
 }
