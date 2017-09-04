@@ -23,7 +23,6 @@ draw = ->
 
 addNewMinion = ->
    minion = templates.minion
-   
 
 
 draw()
