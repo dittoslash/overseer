@@ -5,7 +5,13 @@
   "main": "dist/bundle.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "browserify -t coffeeify src/index.coffee > dist/bundle.js"
+    "build": "browserify --debug src/index.coffee > dist/bundle.js",
+    "serve": "beefy src/index.coffee:bundle.js 8080 --live --index=dist/index.html "
+  },
+  "browserify": {
+    "transform": [
+      "coffeeify"
+    ]
   },
   "repository": {
     "type": "git",
@@ -20,5 +26,8 @@
   "devDependencies": {
     "browserify": "^14.4.0",
     "coffeeify": "^2.1.0"
+  },
+  "dependencies": {
+    "numeral": "^2.0.6"
   }
 }
