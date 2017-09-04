@@ -1,5 +1,6 @@
 module.exports =
-   creature:
+   minion:
+      species: "None"
       baselrn: 1
       str: 1
       strlrn: 1

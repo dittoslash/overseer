@@ -1,4 +1,7 @@
 module.exports =
+   lists:
+      traits: {HardWorker: [1, 3]}
+      species: ["human", "goblin"]
    traits:
       ###
       HOW SHIT WORKS
@@ -14,8 +17,11 @@ module.exports =
          modStrLrn: ["/", 2]
          modCon: ["*", 2]
          modConLrn: ["/", 2]
-         modIntLrn:
-      human:
-
-
+         modInt: ["/", 4]
+         modIntLrn: ["/", 4]
+   species: #Species define base stats of a minion.
+      human:  {baselrn: 1, str: 1, strlrn: 1.5, con: 1, conlrn: 1.5, int: 3, intlrn: 1.5}
+      goblin: {baselrn: 1, str: 1, strlrn: 1,   con: 1, conlrn: 1,   int: 1, intlrn: 1}
+###
    traitsets:
+###
