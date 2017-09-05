@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "browserify --debug src/index.coffee > dist/bundle.js",
-    "serve": "beefy src/index.coffee:bundle.js 8080 --live --index=dist/index.html "
+    "serve": "beefy src/index.coffee:bundle.js 8080 --live --cwd=dist"
   },
   "browserify": {
     "transform": [
