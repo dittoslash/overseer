@@ -8,14 +8,16 @@ game =
    stonebricks: 0
    science: 0
    minions: []
+   research: {}
 u = u.u
+game.research[i] = 0 for i in Object.keys(data.research)
 
 #copy = (object)
 rng = (min,max)-> Math.floor(Math.random() * ((max+1) - min) + min)
 rchance = (dec)-> Math.random() < dec
 pick = (array)-> array[rng(0,array.length-1)]
 picko = (object)-> pick(Object.keys(object))
-fnumb = (n)-> numeral(n).format(0.000)
+fnumb = (n)-> numeral(n).format("0.[000]")
 
 traitFormat = (minion)->
    str = ""
@@ -25,12 +27,21 @@ traitFormat = (minion)->
    return str
 
 drawCommander = (minion, n)->
-   str = "<select, class='command-#{n}'><option disabled>Job</option>"
+   str = "<select id='command-#{n}'><option disabled>Job</option>"
    str += "<option>#{i}</option>" for i in data.jobs
    str += "</select>"
    return str
 
-calcStatsPart = (stat, minion, trait, val)->
+partCalcStatBounds = (val) ->
+   if val[..8] == "research"
+      if game.research[val] > 0
+         [1, game.research[val]+1]
+      else
+         [1, 1]
+   else
+      return [1, 1]
+
+partCalcStats = (stat, minion, trait, val)->
    if trait[stat]
       switch trait[stat][0]
          when "/" then minion[stat[3..].toLowerCase()] /= (val * trait[stat][1])
@@ -43,7 +54,7 @@ calcStats = (minion)->
       val = minion.traits[i]
       trait = data.traits[i]
       for i in ["modBaseLrn", "modStr", "modCon", "modInt", "modStrLrn", "modConLrn", "modIntLrn"]
-         calcStatsPart(i, minion, trait, val)
+         partCalcStats(i, minion, trait, val)
 
 draw = ->
    str = ""
@@ -58,18 +69,23 @@ draw = ->
       for s in Object.keys(stats)
          if typeof i[s] == "number" then str += "<td>#{fnumb(i[s])}</td>"
          else str += "<td>#{i[s]}</td>"
-      str += "<td>#{traitFormat(i)}</td><td>#{drawCommander(i, n-1)}</td></tr>"
+      str += "<td>#{traitFormat(i)}</td><td>#{drawCommander(i, n)}</td></tr>"
+      drawInv()
 
    u("#minions").html str
-   u("#inventory").html "<tr><td>Wood: #{game.wood}</td><td>Stone: #{game.stone}</td><td>Stone Bricks: #{game.stonebricks}</td><td>Science: #{game.science}</td></tr>"
+
+drawInv = -> u("#inventory").html "<tr><td>Wood: #{fnumb(game.wood)}</td><td>Stone: #{fnumb(game.stone)}</td><td>Stone Bricks: #{fnumb(game.stonebricks)}</td><td>Science: #{fnumb(game.science)}</td></tr>"
 
 addNewMinion = ->
    minion = JSON.parse(JSON.stringify(data.species[pick(data.lists.species)]))
    n = 0
    while true
       if rchance(0.75)
-         t = picko(data.traits)
-         val = rng(data.lists.traits[t][0], data.lists.traits[t][1])
+         t = picko(data.lists.traits)
+         valBounds = data.lists.traits[t]
+         if typeof valBounds == "string"
+            valBounds = partCalcStatBounds(valBounds)
+         val = rng(valBounds[0], valBounds[1])
          n += val
          break if n > 5
          minion.traits[t] = val
@@ -85,6 +101,16 @@ document.addEventListener "DOMContentLoaded", ->
    u("button.newMinion").on("click", addNewMinion).html("New Minion")
 
 setInterval(->
+   n = 0
    for i in game.minions
-
+      n += 1
+      e = document.getElementById("command-#{n}")
+      i.job = e.options[e.selectedIndex].text
+   for i in game.minions
+      switch i.job
+         when "Miner"       then game.stone += 0.1*i.str*(i.con*0.5)
+         when "Woodcutter"  then game.wood += 0.1*i.str*(i.con*0.5)
+         when "Stonecutter" then game.stonebricks += 0.1*(i.str*0.5)*i.con
+         when "Researcher"  then game.science += 0.1*i.int
+   drawInv()
 , 100)

@@ -1,9 +1,10 @@
 module.exports =
    lists:
-      traits: {HardWorker: [1, 3], Intelligent: [1, 3]}
+      traits: {HardWorker: "researchHardWorker", Intelligent: "researchIntelligent"}
       species: ["human", "goblin"]
    stats: {species: "Species", str: "Strength", con: "Constitution", int: "Intelligence", baselrn: "LM", strlrn: "Str. LM", conlrn: "Con. LM", intlrn: "Int. LM"}
-   jobs: ["None", "Woodcutter", "Researcher", "Stonecutter", "Miner"]
+   jobs: ["None", "Woodcutter", "Stonecutter", "Miner", "Researcher"]
+   research: {researchHardWorker: [], researchIntelligent: []}
    traits:
       ###
       HOW SHIT WORKS
@@ -16,11 +17,8 @@ module.exports =
       func is a function that takes the minion and returns the changed version.
       ###
       HardWorker:
-         modBaseLrn: ["/", 2]
          modStr: ["*", 2]
          modCon: ["*", 2]
-         modInt: ["/", 4]
-         modIntLrn: ["/", 2]
       Intelligent:
          modInt: ["*", 2]
          modBaseLrn: ["*", 3]
