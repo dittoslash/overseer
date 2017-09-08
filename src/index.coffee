@@ -29,6 +29,8 @@ traitFormat = (minion)->
 drawCommander = (minion, n)->
    str = "<select id='command-#{n}'><option disabled>Job</option>"
    str += "<option>#{i}</option>" for i in data.jobs
+   unless i.job == ""
+      u("#command-#{n}").find((node)-> u(node).html == i.job).attr("selected", "true")
    str += "</select>"
    return str
 
